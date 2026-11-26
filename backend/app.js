@@ -10,12 +10,11 @@ const upload = multer({ storage: multer.memoryStorage() });
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',        
-  password: 'a@12@master@#lolpro1',
-  database: 'rewindbd' 
-});
+const db = mysql.createPool({ 
+  host: 'mysql-roman110108.alwaysdata.net',
+  user: 'roman110108', 
+  password: 'NbM9K!Rbeng8aUS', 
+  database: 'roman110108_rewindbd' }); 
 
 const supabase = createClient('https://crquiefsxacingrlvoao.supabase.co', 'sb_publishable_88lA8L6s-lP5_swNh40jCg_6n0vr53q');
 
@@ -29,7 +28,7 @@ db.connect((err) => {
 
 //Partes de utilizador
 
-app.get('/', (req, res) => {
+app.get('/https://roman110108.alwaysdata.net/', (req, res) => {
   res.send('API Rewind a funcionar!');
 });
 
@@ -40,21 +39,87 @@ app.get('/utilizador', (req, res) => {
   });
 });
 
-/* Conecção de utilizador e role utilizador_role :PPPPP */
+app.post('/utilizador', (req, res) => {
+  const { Nome, Email, PalavraPasse } = req.body;
 
-app.get('/utilizador_role', (req, res) => {
-  db.query('SELECT * FROM utilizador_role', (err, results) => {
+  db.query('INSERT INTO utilizador (nome, email, password) VALUES (?, ?, ?)', [Nome, Email, PalavraPasse], (err, results) => {
     if (err) return res.status(500).json({ erro: err.message });
-    res.json(results);
+    res.status(201).json({ id: results.insertId, nome: Nome, email: Email });
   });
 });
 
-app.get('/role', (req, res) => {
-  db.query('SELECT * FROM role', (err, results) => {
+app.get('/utilizadorSignIn', (req, res) => {
+  res.send('Faz Sign in aqui!');
+})
+
+app.post('/utilizadorSignIn', (req, res) => {
+  const { Email, Nome,  PalavraPasse } = req.body; 
+
+  db.query('SELECT * FROM utilizador WHERE email = ? AND nome = ? AND password = ?', [Email,Nome, PalavraPasse], (err, results) => {
     if (err) return res.status(500).json({ erro: err.message });
-    res.json(results);
+    if (results.length === 0) {
+      return res.status(401).json({ erro: 'Não foi valido para criação de conta.' });
+    }
+    res.json(results[0]);
   });
 });
+
+
+
+app.get('/utilizadorLogIn', (req, res) => {
+  res.send('Faz Log in aqui!');
+});
+
+app.post('/utilizadorLogIn', (req, res) => {
+  const { Email, Nome, PalavraPasse } = req.body;
+
+  db.query('SELECT * FROM utilizador WHERE Email = ? OR Nome = ? AND PalavraPasse = ?', [Email, Nome, PalavraPasse], (err, results) => {
+    if (err) return res.status(500).json({ erro: err.message});
+    if (results.length === 0) {
+      return res.status(401).json({ erro: 'Algo está errado, culpa não é minha, tenta outra vez.' });
+    }
+    res.json(results[0]);
+  });
+});
+
+app.get('/utilizador/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.query('SELECT * FROM utilizador WHERE id = ?', [id], (err, results) => {
+    if (err) return res.status(500).json({ erro: err.message });
+    if (results.length === 0) {
+      return res.status(404).json({ erro: 'Utilizador não encontrado.' });
+    }
+    res.json(results[0]);
+  });
+});
+
+app.delete('/utilizador/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.query('DELETE FROM utilizador WHERE id = ?', [id], (err, results) => {
+    if (err) return res.status(500).json({ erro: err.message });
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ erro: 'Utilizador não encontrado.' });
+    }
+    res.json({ mensagem: 'Utilizador eliminado com sucesso.' });
+  });
+});
+
+//Admin
+
+app.post('/admin', (req, res) => {
+  const { Nome, Email, Palavra, role} = req.body;
+
+  db.query('INSERT INTO utilizador (nome, email, password, role) VALUES (?, ?, ?, ?)', [Nome, Email, Palavra, role], (err, results) => {
+    if (err) return res.status(500).json({ erro: err.message });
+    res.status(201).json({ id: results.insertId, nome: Nome, email: Email, role: role });
+  });
+});
+
+
+
+//Musica, Album, Favoritos, Historico de Reproducao tuff tuff :P
 
 app.get('/album', (req, res) => {
   db.query('SELECT * FROM album', (err, results) => {
@@ -77,12 +142,6 @@ app.get('/historico_reproducao', (req, res) => {
   });
 });
 
-app.get('/queue', (req, res) => {
-  db.query('SELECT * FROM queue', (err, results) => {
-    if (err) return res.status(500).json({ erro: err.message });
-    res.json(results);
-  });
-});
 
 //Parte de artista e seguir 
 
@@ -151,20 +210,6 @@ app.post('/musica', upload.single('ficheiro'), async (req, res) => {
 
 app.get('/genero', (req, res) => {
   db.query('SELECT * FROM genero', (err, results) => {
-    if (err) return res.status(500).json({ erro: err.message });
-    res.json(results);
-  });
-});
-
-app.get('/musicastop', (req, res) => {
-  db.query('SELECT * FROM musicastop', (err, results) => {
-    if (err) return res.status(500).json({ erro: err.message });
-    res.json(results);
-  });
-});
-
-app.get('/topmusicasmaisouvidas', (req, res) => {
-  db.query('SELECT * FROM topmusicasmaisouvidas', (err, results) => {
     if (err) return res.status(500).json({ erro: err.message });
     res.json(results);
   });
@@ -299,6 +344,6 @@ app.delete('/seguidor_utilizador/:utilizadorId/:artistaId', (req, res) => {
 });
 
 
-app.listen(4545, '0.0.0.0', () => {
-  console.log('API a correr na porta 4545');
-});
+const PORT = process.env.PORT || 8100; 
+ const IP = process.env.IP || '::'; 
+ app.listen(PORT, IP, () => { console.log('API a correr!'); });

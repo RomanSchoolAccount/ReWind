@@ -4,6 +4,9 @@ const cors = require('cors');
 const multer = require('multer');
 const { createClient } = require('@supabase/supabase-js');
 
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../rewindmobilev1/build/web')));
+
 const app = express();
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -20,10 +23,6 @@ const db = mysql.createPool({
 const supabase = createClient('https://supabase.co', 'sb_publishable_88lA8L6s-lP5_swNh40jCg_6n0vr53q');
 
 // Partes de utilizador :3
-
-app.get('/', (req, res) => {
-  res.send('API Rewind a funcionar!');
-});
 
 app.get('/utilizador', (req, res) => {
   db.query('SELECT * FROM utilizador', (err, results) => {

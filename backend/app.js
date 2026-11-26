@@ -2,13 +2,15 @@ const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
 const multer = require('multer');
-const { createClient } = require('@supabase/supabase-js');
-
 const path = require('path');
-app.use(express.static(path.join(__dirname, '../rewindmobilev1/build/web')));
+const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
 const upload = multer({ storage: multer.memoryStorage() });
+
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, '../rewindmobilev1/build/web')));
 
 app.use(cors());
 app.use(express.json());

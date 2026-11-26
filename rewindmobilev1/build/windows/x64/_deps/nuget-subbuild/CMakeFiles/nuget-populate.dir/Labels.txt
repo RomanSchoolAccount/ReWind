@@ -1,0 +1,15 @@
+# Target labels
+ nuget-populate
+# Source files and their labels
+C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/nuget-populate
+C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/615893a44ad7b034452b0edce500e737/nuget-populate.rule
+C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/a54c8eabbb2f6170acdb2d73fa139ffd/nuget-populate-complete.rule
+C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/5197b0b95b69cfb07858b7405034abfa/nuget-populate-build.rule
+C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/5197b0b95b69cfb07858b7405034abfa/nuget-populate-configure.rule
+C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/5197b0b95b69cfb07858b7405034abfa/nuget-populate-copyfile.rule
+C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/5197b0b95b69cfb07858b7405034abfa/nuget-populate-download.rule
+C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/5197b0b95b69cfb07858b7405034abfa/nuget-populate-install.rule
+C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/5197b0b95b69cfb07858b7405034abfa/nuget-populate-mkdir.rule
+C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/5197b0b95b69cfb07858b7405034abfa/nuget-populate-patch.rule
+C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/5197b0b95b69cfb07858b7405034abfa/nuget-populate-test.rule
+C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/5197b0b95b69cfb07858b7405034abfa/nuget-populate-update.rule

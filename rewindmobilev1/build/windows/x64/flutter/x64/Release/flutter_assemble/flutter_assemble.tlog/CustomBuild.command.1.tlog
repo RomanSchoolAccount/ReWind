@@ -1,0 +1,28 @@
+^C:\WAMP64\WWW\REWIND\REWINDMOBILEV1\BUILD\WINDOWS\X64\CMAKEFILES\BDF251D8663F75C7B7D65F578BC3E5E6\FLUTTER_WINDOWS.DLL.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\18\Insiders\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E env FLUTTER_ROOT=C:\Users\11rom\Downloads\flutter\flutter PROJECT_DIR=C:\wamp64\www\rewind\rewindmobilev1 FLUTTER_ROOT=C:\Users\11rom\Downloads\flutter\flutter FLUTTER_EPHEMERAL_DIR=C:\wamp64\www\rewind\rewindmobilev1\windows\flutter\ephemeral PROJECT_DIR=C:\wamp64\www\rewind\rewindmobilev1 FLUTTER_TARGET=lib\main.dart DART_DEFINES=RkxVVFRFUl9CVUlMRF9OQU1FPTEuMC4w,RkxVVFRFUl9CVUlMRF9OVU1CRVI9MQ==,RkxVVFRFUl9WRVJTSU9OPTMuNDcuOQ==,RkxVVFRFUl9DSEFOTkVMPXN0YWJsZQ==,RkxVVFRFUl9HSVRfVVJMPWh0dHBzOi8vZ2l0aHViLmNvbS9mbHV0dGVyL2ZsdXR0ZXIuZ2l0,RkxVVFRFUl9GUkFNRVdPUktfUkVWSVNJT049YzE5N2NhNTE5OQ==,RkxVVFRFUl9FTkdJTkVfUkVWSVNJT049ODljMzllZGZkZg==,RkxVVFRFUl9EQVJUX1ZFUlNJT049My4xMy43 DART_OBFUSCATION=false TRACK_WIDGET_CREATION=true TREE_SHAKE_ICONS=true PACKAGE_CONFIG=C:\wamp64\www\rewind\rewindmobilev1\.dart_tool\package_config.json C:/Users/11rom/Downloads/flutter/flutter/packages/flutter_tools/bin/tool_backend.bat windows-x64 Release
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\WAMP64\WWW\REWIND\REWINDMOBILEV1\BUILD\WINDOWS\X64\CMAKEFILES\101FEDBD3F6D870EC9687050C2DC5A77\FLUTTER_ASSEMBLE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\WAMP64\WWW\REWIND\REWINDMOBILEV1\WINDOWS\FLUTTER\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\Microsoft Visual Studio\18\Insiders\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/wamp64/www/rewind/rewindmobilev1/windows -BC:/wamp64/www/rewind/rewindmobilev1/build/windows/x64 --check-stamp-file C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/flutter/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

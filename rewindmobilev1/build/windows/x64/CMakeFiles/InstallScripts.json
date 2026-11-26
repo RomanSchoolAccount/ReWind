@@ -1,0 +1,14 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/cmake_install.cmake",
+		"C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/flutter/cmake_install.cmake",
+		"C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/runner/cmake_install.cmake",
+		"C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/plugins/app_links/cmake_install.cmake",
+		"C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/plugins/audioplayers_windows/cmake_install.cmake",
+		"C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/plugins/url_launcher_windows/cmake_install.cmake",
+		"C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/plugins/jni/cmake_install.cmake",
+		"C:/wamp64/www/rewind/rewindmobilev1/build/windows/x64/plugins/jni/shared/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

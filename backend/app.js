@@ -10,25 +10,18 @@ const upload = multer({ storage: multer.memoryStorage() });
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createPool({ 
+const db = mysql.createPool({
   host: 'mysql-roman110108.alwaysdata.net',
-  user: 'roman110108', 
-  password: 'NbM9K!Rbeng8aUS', 
-  database: 'roman110108_rewindbd' }); 
-
-const supabase = createClient('https://crquiefsxacingrlvoao.supabase.co', 'sb_publishable_88lA8L6s-lP5_swNh40jCg_6n0vr53q');
-
-db.connect((err) => {
-  if (err) {
-    console.error('Erro ao ligar ao MySQL:', err);
-    return;
-  }
-  console.log('Ligado à base de dados MySQL!');
+  user: 'roman110108',
+  password: 'NbM9K!Rbeng8aUS',
+  database: 'roman110108_rewindbd'
 });
 
-//Partes de utilizador
+const supabase = createClient('https://supabase.co', 'sb_publishable_88lA8L6s-lP5_swNh40jCg_6n0vr53q');
 
-app.get('/https://roman110108.alwaysdata.net/', (req, res) => {
+// Partes de utilizador :3
+
+app.get('/', (req, res) => {
   res.send('API Rewind a funcionar!');
 });
 
@@ -50,12 +43,12 @@ app.post('/utilizador', (req, res) => {
 
 app.get('/utilizadorSignIn', (req, res) => {
   res.send('Faz Sign in aqui!');
-})
+});
 
 app.post('/utilizadorSignIn', (req, res) => {
-  const { Email, Nome,  PalavraPasse } = req.body; 
+  const { Email, Nome, PalavraPasse } = req.body;
 
-  db.query('SELECT * FROM utilizador WHERE email = ? AND nome = ? AND password = ?', [Email,Nome, PalavraPasse], (err, results) => {
+  db.query('SELECT * FROM utilizador WHERE email = ? AND nome = ? AND password = ?', [Email, Nome, PalavraPasse], (err, results) => {
     if (err) return res.status(500).json({ erro: err.message });
     if (results.length === 0) {
       return res.status(401).json({ erro: 'Não foi valido para criação de conta.' });
@@ -63,8 +56,6 @@ app.post('/utilizadorSignIn', (req, res) => {
     res.json(results[0]);
   });
 });
-
-
 
 app.get('/utilizadorLogIn', (req, res) => {
   res.send('Faz Log in aqui!');
@@ -74,7 +65,7 @@ app.post('/utilizadorLogIn', (req, res) => {
   const { Email, Nome, PalavraPasse } = req.body;
 
   db.query('SELECT * FROM utilizador WHERE Email = ? OR Nome = ? AND PalavraPasse = ?', [Email, Nome, PalavraPasse], (err, results) => {
-    if (err) return res.status(500).json({ erro: err.message});
+    if (err) return res.status(500).json({ erro: err.message });
     if (results.length === 0) {
       return res.status(401).json({ erro: 'Algo está errado, culpa não é minha, tenta outra vez.' });
     }
@@ -106,10 +97,10 @@ app.delete('/utilizador/:id', (req, res) => {
   });
 });
 
-//Admin
+// Admin
 
 app.post('/admin', (req, res) => {
-  const { Nome, Email, Palavra, role} = req.body;
+  const { Nome, Email, Palavra, role } = req.body;
 
   db.query('INSERT INTO utilizador (nome, email, password, role) VALUES (?, ?, ?, ?)', [Nome, Email, Palavra, role], (err, results) => {
     if (err) return res.status(500).json({ erro: err.message });
@@ -117,9 +108,7 @@ app.post('/admin', (req, res) => {
   });
 });
 
-
-
-//Musica, Album, Favoritos, Historico de Reproducao tuff tuff :P
+// Musica, Album, Favoritos, Historico de Reproducao
 
 app.get('/album', (req, res) => {
   db.query('SELECT * FROM album', (err, results) => {
@@ -142,8 +131,7 @@ app.get('/historico_reproducao', (req, res) => {
   });
 });
 
-
-//Parte de artista e seguir 
+// Parte de artista e seguir
 
 app.get('/artista', (req, res) => {
   db.query('SELECT * FROM artista', (err, results) => {
@@ -152,9 +140,7 @@ app.get('/artista', (req, res) => {
   });
 });
 
-
-
-//musicas
+// Musicas
 
 app.get('/musica', async (req, res) => {
   const { data, error } = await supabase
@@ -223,17 +209,16 @@ app.get('/playlist', (req, res) => {
 });
 
 app.post('/playlist', (req, res) => {
- const {nome, utilizador_id } = req.body;
+  const { nome, utilizador_id } = req.body;
 
- const sql = 'INSERT INTO playlist (nome, utilizador_id) VALUES (?,?)';
- db.query(sql, [nome, utilizador_id], (err, result) => {
-  if(err) return res.status(500).json({ erro: err.message});
-  res.status(201).json({id: result_insertId, nome, utilizador_id});
- });
+  const sql = 'INSERT INTO playlist (nome, utilizador_id) VALUES (?,?)';
+  db.query(sql, [nome, utilizador_id], (err, result) => {
+    if (err) return res.status(500).json({ erro: err.message });
+    res.status(201).json({ id: result.insertId, nome, utilizador_id });
+  });
 });
 
-
-// Conecção de musica com todos as outras tabelas profissionais tuff tuff tuff
+// Conecção de musica com todos as outras tabelas :D
 
 app.get('/musica_artista', (req, res) => {
   db.query('SELECT * FROM musica_artista', (err, results) => {
@@ -270,7 +255,7 @@ app.get('/playlist_musica', (req, res) => {
   });
 });
 
-/* Conecção Seguidor  */
+/* Conecção Seguidor */
 
 app.get('/seguidor_artista', (req, res) => {
   db.query('SELECT * FROM seguidor_artista', (err, results) => {
@@ -280,16 +265,14 @@ app.get('/seguidor_artista', (req, res) => {
 });
 
 app.put('/seguidor_artista', (req, res) => {
-  const { Utilizador_idUtilizador, Artista_idArtista , Data_Seguido} = req.body;
+  const { Utilizador_idUtilizador, Artista_idArtista, Data_Seguido } = req.body;
 
-  const sql='INSERT INTO seguidor_artista (idSeguidor_Artista,Utilizador_idUtilizador,Artista_idArtista,Data_Seguido) VALUES (?,?,?)';
-
+  const sql = 'INSERT INTO seguidor_artista (Utilizador_idUtilizador, Artista_idArtista, Data_Seguido) VALUES (?,?,?)';
   const data = Data_Seguido || new Date();
 
-    db.query(sql, [Utilizador_idUtilizador, Artista_idArtista, data], (err, result) => {
+  db.query(sql, [Utilizador_idUtilizador, Artista_idArtista, data], (err, result) => {
     if (err) return res.status(500).json({ erro: err.message });
-    
-    res.status(201).json({idSeguidor_Artista: result.insertId,Utilizador_idUtilizador,Artista_idArtista,Data_Seguido: data});
+    res.status(201).json({ idSeguidor_Artista: result.insertId, Utilizador_idUtilizador, Artista_idArtista, Data_Seguido: data });
   });
 });
 
@@ -300,14 +283,12 @@ app.delete('/seguidor_artista/:utilizadorId/:artistaId', (req, res) => {
 
   db.query(sql, [utilizadorId, artistaId], (err, result) => {
     if (err) return res.status(500).json({ erro: err.message });
-
     if (result.affectedRows === 0) {
       return res.status(404).json({ mensagem: 'Registo não encontrado.' });
     }
+    res.json({ mensagem: 'Deixou de seguir o artista com sucesso.' });
   });
 });
-
-
 
 app.get('/seguidor_utilizador', (req, res) => {
   db.query('SELECT * FROM seguidor_utilizador', (err, results) => {
@@ -316,34 +297,34 @@ app.get('/seguidor_utilizador', (req, res) => {
   });
 });
 
-app.post('/seguidor_utilizador', (req, res) =>{
-  const { idSeguidor , idSeguido , Data_Seguido } = req.body;
+app.post('/seguidor_utilizador', (req, res) => {
+  const { idSeguidor, idSeguido, Data_Seguido } = req.body;
 
   const sql = 'INSERT INTO seguidor_utilizador (idSeguidor, idSeguido, Data_Seguido) VALUES(?,?,?)';
-
   const BananaData = Data_Seguido || new Date();
 
-  db.query(sql [idSeguidor, idSeguido, BananaData], (err, result) =>{
+  db.query(sql, [idSeguidor, idSeguido, BananaData], (err, result) => {
     if (err) return res.status(500).json({ erro: err.message });
-
-    res.status(201).json({id: result.insertId, idSeguidor, idSeguido, Data_Seguido: data});
+    res.status(201).json({ id: result.insertId, idSeguidor, idSeguido, Data_Seguido: BananaData });
   });
 });
 
-app.delete('/seguidor_utilizador/:utilizadorId/:artistaId', (req, res) => {
-  const { idSeguidor, idSeguido, Data_Seguido } = req.params;
+app.delete('/seguidor_utilizador/:idSeguidor/:idSeguido', (req, res) => {
+  const { idSeguidor, idSeguido } = req.params;
 
   const sql = 'DELETE FROM seguidor_utilizador WHERE idSeguidor = ? AND idSeguido = ?';
 
-  db.query(sql, [idSeguido, idSeguidor], (err,result) =>{
-        if (err) return res.status(500).json({ erro: err.message });
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ mensagem: 'Sem Seguidores.' });
-  }});
+db.query(sql, [idSeguidor, idSeguido], (err, result) => {
+  if (err) return res.status(500).json({ erro: err.message });
+  if (result.affectedRows === 0) {
+    return res.status(404).json({ mensagem: 'Sem Seguidores.' });
+          }
+      res.json({ mensagem: 'Deixou de seguir o utilizador com sucesso.' });
+    });
 });
 
-
-const PORT = process.env.PORT || 8100; 
- const IP = process.env.IP || '::'; 
- app.listen(PORT, IP, () => { console.log('API a correr!'); });
+const PORT = process.env.PORT || 4545;
+const IP = process.env.IP || '::';
+app.listen(PORT, IP, () => {
+console.log('API a correr!');
+});
